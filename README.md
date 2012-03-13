@@ -360,7 +360,9 @@ precisely, you will want to configure:
   because Arch should not touch the hardware clock at all), the HOSTNAME variable (but see
   below the drawbacks of this and a workaround) and the DAEMONS array. Everything else
   will not be used. Note that the keyboard keymap and fonts will also be used in the
-  Chrome OS dev console on tty2.
+  Chrome OS dev console on tty2. The HOSTNAME should be the same as in 
+  chromiarchos-restore, otherwise your input devices will not work properly under Chrome
+  (e.g. limited touchpad functionality, no tap to click, etc...)
 - `/etc/hosts` : Just put here the HOSTNAME you configured in `/etc/rc.conf`.
 - `/etc/locale.gen` : Uncomment the locales you need and run `locale-gen`.
 
