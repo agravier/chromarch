@@ -16,12 +16,6 @@ printsep
  mountpoint -q /run     || mount -n -t tmpfs run /run -o mode=0755,size=10M,nosuid,nodev
  mountpoint -q /dev     || mount -n -t devtmpfs udev /dev -o mode=0755,size=10M,nosuid &>/dev/null \
  	|| mount -n -t tmpfs udev /dev -o mode=0755,size=10M,nosuid
- mkdir -p -m 1777 /run/lock
- mkdir -p /dev/{pts,shm}
- mountpoint -q /dev/pts || mount -n /dev/pts &>/dev/null \
- 	|| mount -n -t devpts devpts /dev/pts -o mode=0620,gid=5,nosuid,noexec
- mountpoint -q /dev/shm || mount -n /dev/shm &>/dev/null \
- 	|| mount -n -t tmpfs shm /dev/shm -o mode=1777,nosuid,nodev
 
 # remount root ro to allow for fsck later on, we remount now to
 # make sure nothing can open files rw on root which would block a remount

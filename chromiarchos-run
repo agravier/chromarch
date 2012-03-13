@@ -30,7 +30,17 @@ echo 0 > /proc/$$/oom_score_adj
 # Mounts
 mkdir $CHROOT_DIR
 mount /dev/sda13 $CHROOT_DIR
-mount -o bind /dev $CHROOT_DIR/dev  # TODO check that this is really needed
+mount -o bind /dev $CHROOT_DIR/dev
+mount -o bind /dev/shm $CHROOT_DIR/dev/shm
+mount -t devpts devpts $CHROOT_DIR/dev/pts # we want pseudoterminals. alternately, tmux.
+mount -t proc proc $CHROOT_DIR/proc        # we want a shared process info space.
+mount -t sysfs sys $CHROOT_DIR/sys         #
+mount -o bind /var/lib/dbus $CHROOT_DIR/var/lib/dbus
+rm -Rf $CHROOT_DIR/run
+mkdir -m 1777 $CHROOT_DIR/run              # dbus & co will fail without this
+mount -o bind /var/run $CHROOT_DIR/run 
+mkdir -m 1777 $CHROOT_DIR/run/lock 
+mount -o bind /var/lock $CHROOT_DIR/run/lock
 
 # Internet
 rm $CHROOT_DIR/etc/resolv.conf
