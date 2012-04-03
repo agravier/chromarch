@@ -1,0 +1,21 @@
+chromexmon is an activity monitor for X11 servers running in a chroot
+in Chrome OS.
+ 
+The program is split in two components communicating indirectly by
+modifying chrome OS power manager configuration directory. The X11
+program chrootxmon.py monitors user activity. It modifies the power
+manager runtime configuration files [1]. These changes are monitored
+by the Chrome OS daemon powermanconf_monitor.sh. The Chrome OS daemon
+restarts the power manager each time the contents of the files that
+specify the screen dimming/turning off and computer suspend delays [1]
+change (including modification date). While the user is active in the
+chrooted X11, the X11 program increases the "dimming", "off" and
+"suspend" timeouts to (configurable) high values to prevent the screen
+to dim or turn off and the computer to suspend. When the user has been
+inactive in the chroot X11 for a configurable duration, the X11
+watchdog restores the power manager configuration files to lower
+values and the Chrome OS daemon restarts the Chrome OS power manager
+when noticing this change.
+
+[1] /var/lib/power_manager/{plugged_dim_ms,unplugged_dim_ms,\
+plugged_off_ms,unplugged_off_ms,plugged_suspend_ms,unplugged_suspend_ms}
