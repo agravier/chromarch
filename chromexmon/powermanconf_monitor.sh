@@ -79,12 +79,12 @@ while check $MONITORED_FILES $CHECK_INTERVAL; do
   # $latest_brightness is the latest non zero brightness
   initctl restart powerd
   if [[ `cat $STATUS_FILE` -gt $STATUS_THRESHOLD ]]; then
-    # when active in the chroot, resteting brightness to
-    # $latest_brightness and checking every 10 seconds
-    set_b $latest_brightness
+    # when active in the chroot, checking every 10 seconds
     CHECK_INTERVAL=10
   else
     # when inactive, checking for activity every ONE second
     CHECK_INTERVAL=1
   fi
+  # resteting brightness to $latest_brightness
+  set_b $latest_brightness
 done
