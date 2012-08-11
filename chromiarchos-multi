@@ -21,3 +21,8 @@ done
 [[ $TIMEZONE ]] && status "Configuring timezone" set_timezone "$TIMEZONE"
 
 [[ -x /etc/rc.local ]] && /etc/rc.local
+
+bootlogd_stop
+
+rm -f /run/nologin
+
